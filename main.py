@@ -1,7 +1,12 @@
+# 2020 Ravi Shah
+# This script selects a random chapter and verse from the Bhagavad Gita and scrapes it from a website.
+
+# Imports
 from bs4 import BeautifulSoup
 import requests
 import random
 
+# Remove <p> tags from the scraped div and replace <br> with a newline
 def get_p(transliteration):
     j = 0
     for i in transliteration:
@@ -13,6 +18,7 @@ def get_p(transliteration):
         else:
             continue
 
+# Generate a random verse number based on the provided chapter
 def get_verse_numbers(chapter):
     if chapter == 1:
         verse = random.randint(1, 47)
@@ -55,15 +61,20 @@ def get_verse_numbers(chapter):
         quit()
     return verse
 
+
+# Generate a random chapter number and use that as input for the above function. Returns chapter and verse numbers
 def random_chapter_verse():
     chapter = random.randint(1, 18)
     verse = get_verse_numbers(chapter)
     return chapter, verse
 
+# Concatenate chapter and verse numbers with the website link to scrape the specific verse
 def generate_link(chapter, verse):
     link = "https://www.holy-bhagavad-gita.org/chapter/" + str(chapter) + "/verse/" + str(verse)
     return link
 
+
+# Main function which generates chapter & verse numbers, creates a link, scrapes the verse, and formats it properly
 def main():
     chapter, verse = random_chapter_verse()
     link = generate_link(chapter, verse)
@@ -75,5 +86,6 @@ def main():
     print("")
     print(formatted_transliteration)
 
+# Run the main function
 if __name__ == '__main__':
     main()
